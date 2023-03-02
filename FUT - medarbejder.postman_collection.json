@@ -454,6 +454,30 @@
 					"response": []
 				},
 				{
+					"name": "hent episode of care",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://careplan.devenvcgi.ehealth.sundhed.dk/fhir/EpisodeOfCare/118621",
+							"protocol": "https",
+							"host": [
+								"careplan",
+								"devenvcgi",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"fhir",
+								"EpisodeOfCare",
+								"118621"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "activate episode-of-care",
 					"request": {
 						"method": "PATCH",
@@ -466,7 +490,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n                \"resourceType\": \"EpisodeOfCare\",\n                \"id\": \"118337\",\n                \"meta\": {\n                    \"versionId\": \"1\",\n                    \"lastUpdated\": \"2023-03-01T10:34:28.434+00:00\",\n                    \"source\": \"#4a32ef6e-6574-4c\",\n                    \"profile\": [\n                        \"http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-episodeofcare\"\n                    ]\n                },\n                \n                \"status\": \"active\"\n                \n        }",
+							"raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"active\"\n  }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -474,7 +498,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://careplan.devenvcgi.ehealth.sundhed.dk/fhir/EpisodeOfCare/118337",
+							"raw": "https://careplan.devenvcgi.ehealth.sundhed.dk/fhir/EpisodeOfCare/118621",
 							"protocol": "https",
 							"host": [
 								"careplan",
@@ -486,9 +510,10 @@
 							"path": [
 								"fhir",
 								"EpisodeOfCare",
-								"118337"
+								"118621"
 							]
-						}
+						},
+						"description": "http://hl7.org/fhir/http.html#patch"
 					},
 					"response": []
 				}
@@ -801,17 +826,17 @@
 	],
 	"variable": [
 		{
-			"id": "c73e4000-ff05-42ff-9aec-f184dba016ad",
+			"id": "eaaffb4e-4022-4c46-9725-aec8452886c1",
 			"key": "eHealth_environment",
 			"value": "devenvcgi"
 		},
 		{
-			"id": "d313fd7b-9c7e-457c-b460-fd4d0ddee108",
+			"id": "25946479-a273-4225-b0e1-0a42c34e28a0",
 			"key": "access_token",
 			"value": ""
 		},
 		{
-			"id": "bdfbc524-67b0-4232-9c8f-1b73abb9031f",
+			"id": "de7a4b52-8e4e-46a8-95a4-db286815a57b",
 			"key": "refresh_token",
 			"value": ""
 		}
