@@ -575,6 +575,193 @@
 			"protocolProfileBehavior": {}
 		},
 		{
+			"name": "searching for resources",
+			"item": [
+				{
+					"name": "gettoken / login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a85a01ab-78d4-463d-8df1-058cef65e4a6",
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
+									"pm.collectionVariables.set(\"refresh_token\", responseJson.refresh_token);",
+									"",
+									"let jwt = responseJson.access_token",
+									"let [jwtHeader, jwtPayload, jwtSignature] = jwt.split('.')",
+									"let jwtPayloadJsonString = atob(jwtPayload)",
+									"//console.log(jwtPayloadJsonString)",
+									"",
+									"let jwtPayloadJson = JSON.parse(jwtPayloadJsonString)",
+									"console.log(jwtPayloadJson)",
+									"",
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+									"    console.log(response.json());",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Gr6_medarbejder9",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Test1266",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "oio_mock",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://saml.{{eHealth_environment}}.ehealth.sundhed.dk/auth/realms/ehealth/protocol/openid-connect/token",
+							"protocol": "https",
+							"host": [
+								"saml",
+								"{{eHealth_environment}}",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"ehealth",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "questionnaires",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://questionnaire.devenvcgi.ehealth.sundhed.dk/fhir/Questionnaire?_count=10&_elements=name%2Ctitle%2Cstatus%2Cpublisher%2Cpurpose%2Cversion%2Cextension%2Cdescription&_sort=-_lastUpdated&status=draft%2Cactive&_getpagesoffset=0&title=kit",
+							"protocol": "https",
+							"host": [
+								"questionnaire",
+								"devenvcgi",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"fhir",
+								"Questionnaire"
+							],
+							"query": [
+								{
+									"key": "_count",
+									"value": "10"
+								},
+								{
+									"key": "_elements",
+									"value": "name%2Ctitle%2Cstatus%2Cpublisher%2Cpurpose%2Cversion%2Cextension%2Cdescription"
+								},
+								{
+									"key": "_sort",
+									"value": "-_lastUpdated"
+								},
+								{
+									"key": "status",
+									"value": "draft%2Cactive"
+								},
+								{
+									"key": "_getpagesoffset",
+									"value": "0"
+								},
+								{
+									"key": "title",
+									"value": "kit"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "plandefinitions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://plan.devenvcgi.ehealth.sundhed.dk/fhir/PlanDefinition?_count=200&_sort=-_lastUpdated&status=draft,active&title=kit",
+							"protocol": "https",
+							"host": [
+								"plan",
+								"devenvcgi",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"fhir",
+								"PlanDefinition"
+							],
+							"query": [
+								{
+									"key": "_count",
+									"value": "200"
+								},
+								{
+									"key": "_sort",
+									"value": "-_lastUpdated"
+								},
+								{
+									"key": "status",
+									"value": "draft,active"
+								},
+								{
+									"key": "title",
+									"value": "kit"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "gettoken / login",
 			"event": [
 				{
@@ -858,17 +1045,17 @@
 	],
 	"variable": [
 		{
-			"id": "47318796-fe24-4eea-9c9a-3110ec6e9dc6",
+			"id": "f8d90b7a-c459-4e25-b816-bc569bde8034",
 			"key": "eHealth_environment",
 			"value": "devenvcgi"
 		},
 		{
-			"id": "c0826916-3d78-487c-8c3a-35c99a4058b9",
+			"id": "26d69e0e-58e4-42c7-b30a-c7b785e85131",
 			"key": "access_token",
 			"value": ""
 		},
 		{
-			"id": "83737c2e-e55c-4ab3-8042-a1b146403ff5",
+			"id": "6babdf92-d007-4a2c-b6ef-19e81ff2c0fd",
 			"key": "refresh_token",
 			"value": ""
 		}
