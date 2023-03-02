@@ -1,0 +1,820 @@
+{
+	"info": {
+		"_postman_id": "b3a112b7-731c-4240-bfe6-1c80ca8775bf",
+		"name": "FUT - medarbejder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Enrolling a Patient in an Episode Of Care",
+			"item": [
+				{
+					"name": "gettoken / login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9eafb637-3d9d-40e7-aadf-f53005e5fec7",
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Gr6_medarbejder9",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Test1266",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "oio_mock",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://saml.{{eHealth_environment}}.ehealth.sundhed.dk/auth/realms/ehealth/protocol/openid-connect/token",
+							"protocol": "https",
+							"host": [
+								"saml",
+								"{{eHealth_environment}}",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"ehealth",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find patient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": "{{acc",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"resourceType\" : \"Parameters\",\n  \"parameter\" : [ {\n    \"name\" : \"resource\",\n    \"resource\" : {\n      \"resourceType\" : \"Person\",\n      \"identifier\" : [ {\n        \"system\" : \"urn:oid:1.2.208.176.1.2\",\n        \"value\" : \"1110109996\"\n      } ]\n    }\n  } ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://patient.devenvcgi.ehealth.sundhed.dk/fhir/Person/$match",
+							"protocol": "https",
+							"host": [
+								"patient",
+								"devenvcgi",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"fhir",
+								"Person",
+								"$match"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gettoken with patient_id in context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc15644f-ccd2-4704-bf4f-1b0c1df92b0c",
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Gr6_medarbejder9",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Test1266",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "oio_mock",
+									"type": "text"
+								},
+								{
+									"key": "patient_id",
+									"value": "https://patient.devenvcgi.ehealth.sundhed.dk/fhir/Patient/258981",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://saml.{{eHealth_environment}}.ehealth.sundhed.dk/auth/realms/ehealth/protocol/openid-connect/token",
+							"protocol": "https",
+							"host": [
+								"saml",
+								"{{eHealth_environment}}",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"ehealth",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create episode-of-care",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"resourceType\": \"Parameters\",\n  \"parameter\": [\n    {\n      \"name\": \"episodeOfCareAndProvenances\",\n      \"resource\": {\n        \"resourceType\": \"Bundle\",\n        \"type\": \"transaction\",\n        \"entry\": [\n          {\n            \"fullUrl\": \"urn:uuid:7e1251dd-fbd0-42db-9cfa-4eb160c1b49e\",\n            \"resource\": {\n              \"resourceType\": \"Provenance\",\n              \"meta\": {\n                \"profile\": [\n                  \"http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-provenance\"\n                ]\n              },\n              \"target\": [\n                {\n                  \"reference\": \"urn:uuid:d91d73a7-bf13-4c73-8c05-bc26d2f7399f\"\n                }\n              ],\n              \"recorded\": \"2023-01-06T09:03:22.299+00:00\",\n              \"policy\": [\n                \"http://ehealth.sundhed.dk/policy/dk/sundhedsloven\"\n              ],\n              \"agent\": [\n                {\n                  \"who\": {\n                    \"reference\": \"https://patient.devenvcgi.ehealth.sundhed.dk/fhir/Patient/258981\"\n                  }\n                }\n              ]\n            },\n            \"request\": {\n              \"method\": \"POST\",\n              \"url\": \"Provenance\"\n            }\n          },\n          {\n            \"fullUrl\": \"urn:uuid:d91d73a7-bf13-4c73-8c05-bc26d2f7399f\",\n            \"resource\": {\n              \"resourceType\": \"EpisodeOfCare\",\n              \"meta\": {\n                \"profile\": [\n                  \"http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-episodeofcare\"\n                ]\n              },\n              \"extension\": [\n                {\n                  \"url\": \"http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-episodeofcare-caremanagerOrganization\",\n                  \"valueReference\": {\n                    \"reference\": \"https://organization.devenvcgi.ehealth.sundhed.dk/fhir/Organization/48062\"\n                  }\n                },\n                {\n                  \"url\": \"http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-episodeofcare-statusschedule\",\n                  \"extension\": [\n                    {\n                      \"url\": \"status\",\n                      \"valueCode\": \"onhold\"\n                    },\n                    {\n                      \"url\": \"scheduledTime\",\n                      \"valueDateTime\": \"2023-01-06T09:03:22+00:00\"\n                    }\n                  ]\n                }\n              ],\n              \"status\": \"planned\",\n              \"diagnosis\": [\n                {\n                  \"condition\": {\n                    \"reference\": \"urn:uuid:c5123f0f-e8f9-4466-9db0-7ffa4fd7dc01\"\n                  }\n                }\n              ],\n              \"patient\": {\n                \"reference\": \"https://patient.devenvcgi.ehealth.sundhed.dk/fhir/Patient/258981\"\n              },\n              \"managingOrganization\": {\n                \"reference\": \"https://organization.devenvcgi.ehealth.sundhed.dk/fhir/Organization/48062\"\n              },\n              \"team\": [\n                  {\n                    \"reference\": \"https://organization.devenvcgi.ehealth.sundhed.dk/fhir/CareTeam/135884\"\n                }\n              ],\n              \"period\": {\n                \"start\": \"1970-01-01T00:00:01+00:00\",\n                \"end\": \"1970-01-01T00:01:40+00:00\"\n              }\n            },\n            \"request\": {\n              \"method\": \"POST\",\n              \"url\": \"EpisodeOfCare\"\n            }\n          },\n          {\n            \"fullUrl\": \"urn:uuid:c5123f0f-e8f9-4466-9db0-7ffa4fd7dc01\",\n            \"resource\": {\n              \"resourceType\": \"Condition\",\n              \"meta\": {\n                \"profile\": [\n                  \"http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-condition\"\n                ]\n              },\n              \"extension\": [\n                {\n                  \"url\": \"http://hl7.org/fhir/StructureDefinition/workflow-episodeOfCare\",\n                  \"valueReference\": {\n                    \"reference\": \"urn:uuid:d91d73a7-bf13-4c73-8c05-bc26d2f7399f\"\n                  }\n                }\n              ],\n              \"clinicalStatus\": {\n                \"coding\": [\n                  {\n                    \"system\": \"http://terminology.hl7.org/CodeSystem/condition-clinical\",\n                    \"code\": \"active\"\n                  }\n                ]\n              },\n              \"code\": {\n                \"coding\": [\n                  {\n                    \"system\": \"urn:oid:1.2.208.176.2.4\",\n                    \"code\": \"DJ44\"\n                  }\n                ]\n              },\n              \"subject\": {\n                \"reference\": \"https://patient.devenvcgi.ehealth.sundhed.dk/fhir/Patient/258981\"\n              }\n            },\n            \"request\": {\n              \"method\": \"POST\",\n              \"url\": \"Condition\"\n            }\n          }\n        ]\n      }\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://careplan.devenvcgi.ehealth.sundhed.dk/fhir/$create-episode-of-care",
+							"protocol": "https",
+							"host": [
+								"careplan",
+								"devenvcgi",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"fhir",
+								"$create-episode-of-care"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gettoken uden patient_id in context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fe3e547e-f5c2-4eb1-b156-15963516abc3",
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Gr6_medarbejder9",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Test1266",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "oio_mock",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://saml.{{eHealth_environment}}.ehealth.sundhed.dk/auth/realms/ehealth/protocol/openid-connect/token",
+							"protocol": "https",
+							"host": [
+								"saml",
+								"{{eHealth_environment}}",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"ehealth",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find mine episode-of-care's",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://careplan.devenvcgi.ehealth.sundhed.dk/fhir/EpisodeOfCare?team=https://organization.devenvcgi.ehealth.sundhed.dk/fhir/CareTeam/135884",
+							"protocol": "https",
+							"host": [
+								"careplan",
+								"devenvcgi",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"fhir",
+								"EpisodeOfCare"
+							],
+							"query": [
+								{
+									"key": "team",
+									"value": "https://organization.devenvcgi.ehealth.sundhed.dk/fhir/CareTeam/135884"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gettoken with episode_of_care_id in context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ca1a9e77-89b7-40ca-935e-50f16923a4d1",
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "Gr6_medarbejder9",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Test1266",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "oio_mock",
+									"type": "text"
+								},
+								{
+									"key": "patient_id",
+									"value": "https://patient.devenvcgi.ehealth.sundhed.dk/fhir/Patient/258981",
+									"type": "text"
+								},
+								{
+									"key": "episode_of_care_id",
+									"value": "https://careplan.devenvcgi.ehealth.sundhed.dk/fhir/EpisodeOfCare/118621",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://saml.{{eHealth_environment}}.ehealth.sundhed.dk/auth/realms/ehealth/protocol/openid-connect/token",
+							"protocol": "https",
+							"host": [
+								"saml",
+								"{{eHealth_environment}}",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"auth",
+								"realms",
+								"ehealth",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activate episode-of-care",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json-patch+json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n                \"resourceType\": \"EpisodeOfCare\",\n                \"id\": \"118337\",\n                \"meta\": {\n                    \"versionId\": \"1\",\n                    \"lastUpdated\": \"2023-03-01T10:34:28.434+00:00\",\n                    \"source\": \"#4a32ef6e-6574-4c\",\n                    \"profile\": [\n                        \"http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-episodeofcare\"\n                    ]\n                },\n                \n                \"status\": \"active\"\n                \n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://careplan.devenvcgi.ehealth.sundhed.dk/fhir/EpisodeOfCare/118337",
+							"protocol": "https",
+							"host": [
+								"careplan",
+								"devenvcgi",
+								"ehealth",
+								"sundhed",
+								"dk"
+							],
+							"path": [
+								"fhir",
+								"EpisodeOfCare",
+								"118337"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "70bdba37-89c2-4e22-a169-83c44407cd21",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "feccf4f7-c78e-4096-baf2-95a92d3290c3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "gettoken / login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7e076947-49b5-4f68-9218-81d6cabb6016",
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
+							"pm.collectionVariables.set(\"refresh_token\", responseJson.refresh_token);",
+							"",
+							"let jwt = responseJson.access_token",
+							"let [jwtHeader, jwtPayload, jwtSignature] = jwt.split('.')",
+							"let jwtPayloadJsonString = atob(jwtPayload)",
+							"//console.log(jwtPayloadJsonString)",
+							"",
+							"let jwtPayloadJson = JSON.parse(jwtPayloadJsonString)",
+							"console.log(jwtPayloadJson)",
+							"",
+							"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+							"    console.log(response.json());",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "Gr6_medarbejder9",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Test1266",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "oio_mock",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://saml.{{eHealth_environment}}.ehealth.sundhed.dk/auth/realms/ehealth/protocol/openid-connect/token",
+					"protocol": "https",
+					"host": [
+						"saml",
+						"{{eHealth_environment}}",
+						"ehealth",
+						"sundhed",
+						"dk"
+					],
+					"path": [
+						"auth",
+						"realms",
+						"ehealth",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userinfo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9db5be27-e586-4550-9a11-a399cb302b50",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://organization.{{eHealth_environment}}.ehealth.sundhed.dk/fhir/Practitioner/137139",
+					"protocol": "https",
+					"host": [
+						"organization",
+						"{{eHealth_environment}}",
+						"ehealth",
+						"sundhed",
+						"dk"
+					],
+					"path": [
+						"fhir",
+						"Practitioner",
+						"137139"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "careteams",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/fhir+json; charset=UTF-8",
+						"type": "text"
+					},
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://organization.devenvcgi.ehealth.sundhed.dk/fhir/CareTeam",
+					"protocol": "https",
+					"host": [
+						"organization",
+						"devenvcgi",
+						"ehealth",
+						"sundhed",
+						"dk"
+					],
+					"path": [
+						"fhir",
+						"CareTeam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "find patient",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\" : \"Parameters\",\n  \"parameter\" : [ {\n    \"name\" : \"resource\",\n    \"resource\" : {\n      \"resourceType\" : \"Person\",\n      \"identifier\" : [ {\n        \"system\" : \"urn:oid:1.2.208.176.1.2\",\n        \"value\" : \"2604009610\"\n      } ]\n    }\n  } ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://patient.devenvcgi.ehealth.sundhed.dk/fhir/Person/$match",
+					"protocol": "https",
+					"host": [
+						"patient",
+						"devenvcgi",
+						"ehealth",
+						"sundhed",
+						"dk"
+					],
+					"path": [
+						"fhir",
+						"Person",
+						"$match"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create patient",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<Parameters xmlns=\"http://hl7.org/fhir\">\n    <parameter>\n        <name value=\"crn\"/>\n        <valueIdentifier>\n            <system value=\"urn:oid:1.2.208.176.1.2\"/>\n            <value value=\"1110109996\"/>\n        </valueIdentifier>\n    </parameter>\n</Parameters>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://patient.devenvcgi.ehealth.sundhed.dk/fhir/Patient/$createPatient",
+					"protocol": "https",
+					"host": [
+						"patient",
+						"devenvcgi",
+						"ehealth",
+						"sundhed",
+						"dk"
+					],
+					"path": [
+						"fhir",
+						"Patient",
+						"$createPatient"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2146569c-7929-4585-8360-a81bf6f4a5c4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "83d6734a-5e03-4036-afc1-cf225fb75fea",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "c73e4000-ff05-42ff-9aec-f184dba016ad",
+			"key": "eHealth_environment",
+			"value": "devenvcgi"
+		},
+		{
+			"id": "d313fd7b-9c7e-457c-b460-fd4d0ddee108",
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"id": "bdfbc524-67b0-4232-9c8f-1b73abb9031f",
+			"key": "refresh_token",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
